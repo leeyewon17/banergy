@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ex1/main.dart';
+import '../mypage/mypage.dart';
+import '../mypage/mypage_allergy_information.dart';
+import '../mypage/mypage_record_allergy_reactions.dart';
+import '../mypage/mypage_filtering_allergies.dart';
+import '../mypage/mypage_product_add.dart';
+import '../mypage/mypage_freeboard.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MypageApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MypageApp extends StatelessWidget {
+  const MypageApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +53,48 @@ class _MyHomePageState extends State<MyHomePage>
     super.dispose();
   }
 
+  void _navigateToPage(String pageName) {
+    // 페이지 이름에 따라 다른 동작 수행
+    switch (pageName) {
+      case "알러지 정보":
+        // 알러지 정보 페이지로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const allergyinformation()),
+        );
+        break;
+      case "알러지 반응 기록":
+        // 알러지 반응 기록 페이지로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const recordallergyreactions()),
+        );
+        break;
+      case "알러지 필터링":
+        // 알러지 필터링 페이지로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FilteringAllergies()),
+        );
+        break;
+      case "상품추가":
+        // 상품추가 페이지로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => productadd()),
+        );
+        break;
+      case "자유게시판":
+        // 자유게시판 페이지으로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const freeboard()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,13 +104,6 @@ class _MyHomePageState extends State<MyHomePage>
       body: Center(
         child: _buildlist(),
       ),
-      // body: _selectedIndex == 0
-      //     ? tabcontainer(context, Colors.indigo, "home Tab")
-      //     : _selectedIndex == 1
-      //         ? tabcontainer(
-      //             context, Colors.amber[600] as Color, "smart lens Tab")
-      //         : tabcontainer(context, Colors.black38, "mypage Tab"),
-      // body: Container(),
       bottomNavigationBar: SizedBox(
         height: 80,
         child: TabBar(
@@ -70,7 +111,17 @@ class _MyHomePageState extends State<MyHomePage>
           labelColor: Colors.black,
           tabs: [
             Tab(
-              icon: Icon(Icons.home),
+              icon: GestureDetector(
+                onTap: () {
+                  // home 아이콘이 눌렸을 때 main.dart 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainpageApp()),
+                  );
+                },
+                child: Icon(Icons.home),
+              ),
               text: "Home",
             ),
             Tab(
@@ -78,7 +129,16 @@ class _MyHomePageState extends State<MyHomePage>
               text: "Lens",
             ),
             Tab(
-              icon: Icon(Icons.person),
+              icon: GestureDetector(
+                onTap: () {
+                  // home 아이콘이 눌렸을 때 main.dart 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MypageApp()),
+                  );
+                },
+                child: Icon(Icons.person),
+              ),
               text: "My",
             ),
           ],
@@ -87,31 +147,30 @@ class _MyHomePageState extends State<MyHomePage>
     );
   }
 
-  // Widget tabcontainer(BuildContext con, Color tabcolor, String tabText) {
-  //   return Container(
-  //     width: MediaQuery.of(con).size.width,
-  //     height: MediaQuery.of(con).size.height,
-  //     color: tabcolor,
-  //     child: Center(
-  //       child: Text(
-  //         tabText,
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-}
+  Widget _buildlist() {
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        final buttonText = [
+          "알러지 정보",
+          "알러지 반응 기록",
+          "알러지 필터링",
+          "상품추가",
+          "자유게시판",
+        ][index];
 
-Widget _buildlist() => ListView(
-      children: [
-        _tile("알러지 정보"),
-        _tile("알러지 반응 기록"),
-        _tile("알러지 필터링"),
-        _tile("제품추가"),
-        _tile("자유게시판"),
-      ],
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: _buildButton(buttonText),
+        );
+      },
     );
+  }
 
-ListTile _tile(String title) => ListTile(title: Text(title));
+  Widget _buildButton(String buttonText) => ElevatedButton(
+        onPressed: () {
+          _navigateToPage(buttonText);
+        },
+        child: Text(buttonText),
+      );
+}

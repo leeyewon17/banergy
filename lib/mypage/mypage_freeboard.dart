@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ex1/main.dart';
+import '../mypage/mypage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const freeboard());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class freeboard extends StatelessWidget {
+  const freeboard({super.key});
 
   // This widget is the root of your application.
   @override
@@ -54,11 +56,6 @@ class _MyHomePageState extends State<MyHomePage>
         title: const Text("자유게시판"),
       ),
       // body: _selectedIndex == 0
-      //     ? tabcontainer(context, Colors.indigo, "home Tab")
-      //     : _selectedIndex == 1
-      //         ? tabcontainer(
-      //             context, Colors.amber[600] as Color, "smart lens Tab")
-      //         : tabcontainer(context, Colors.black38, "mypage Tab"),
       body: Container(),
       bottomNavigationBar: SizedBox(
         height: 80,
@@ -67,7 +64,17 @@ class _MyHomePageState extends State<MyHomePage>
           labelColor: Colors.black,
           tabs: [
             Tab(
-              icon: Icon(Icons.home),
+              icon: GestureDetector(
+                onTap: () {
+                  // home 아이콘이 눌렸을 때 main.dart 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MainpageApp()),
+                  );
+                },
+                child: Icon(Icons.home),
+              ),
               text: "Home",
             ),
             Tab(
@@ -75,7 +82,16 @@ class _MyHomePageState extends State<MyHomePage>
               text: "Lens",
             ),
             Tab(
-              icon: Icon(Icons.person),
+              icon: GestureDetector(
+                onTap: () {
+                  // home 아이콘이 눌렸을 때 main.dart 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MypageApp()),
+                  );
+                },
+                child: Icon(Icons.person),
+              ),
               text: "My",
             ),
           ],
@@ -83,20 +99,4 @@ class _MyHomePageState extends State<MyHomePage>
       ),
     );
   }
-
-  // Widget tabcontainer(BuildContext con, Color tabcolor, String tabText) {
-  //   return Container(
-  //     width: MediaQuery.of(con).size.width,
-  //     height: MediaQuery.of(con).size.height,
-  //     color: tabcolor,
-  //     child: Center(
-  //       child: Text(
-  //         tabText,
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

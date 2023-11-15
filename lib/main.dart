@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import '../appbar/menu.dart';
 import 'appbar/search.dart';
+import '../mypage/mypage.dart';
+import 'package:flutter_ex1/main.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MainpageApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MainpageApp extends StatelessWidget {
+  const MainpageApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +129,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Profile',
+          label: 'My',
         ),
       ],
     );
